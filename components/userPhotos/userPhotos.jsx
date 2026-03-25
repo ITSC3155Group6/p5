@@ -1,8 +1,10 @@
 import React from 'react';
 import {
-  Typography
+  Button, TextField,
+  ImageList, ImageListItem
 } from '@mui/material';
 import './userPhotos.css';
+import fetchModel from "../../lib/fetchModelData";
 
 
 /**
@@ -50,92 +52,53 @@ class UserPhotos extends React.Component {
 
     render() {
         return this.state.user_id ? (
-    <div className="user-photos-container">
-        <div className="user-photos-header">
-            <Button
-                variant="contained"
-                component="a"
-                href={"#/users/" + this.state.user_id}
-            >
-                User Detail
-            </Button>
-        </div>
-
-        <ImageList className="photo-list" variant="masonry" cols={1} gap={16}>
-            {this.state.photos.map((item) => (
-                <div key={item._id} className="photo-card">
-                    
-                    <TextField
-                        label="Photo Date"
-                        variant="outlined"
-                        disabled
-                        fullWidth
-                        margin="normal"
-                        value={item.date_time}
-                    />
-
-                    <ImageListItem>
-                        <img
-                            className="photo-image"
-                            src={`images/${item.file_name}`}
-                            alt={item.file_name}
-                            loading="lazy"
-                        />
-                    </ImageListItem>
-
-                    <div className="comments-section">
-                        {item.comments ? (
-                            item.comments.map((comment) => (
-                                <div key={comment._id} className="comment-card">
-                                    
-                                    <TextField
-                                        label="Comment Date"
-                                        variant="outlined"
-                                        disabled
-                                        fullWidth
-                                        margin="normal"
-                                        value={comment.date_time}
-                                    />
-
-                                    <TextField
-                                        label="User"
-                                        variant="outlined"
-                                        disabled
-                                        fullWidth
-                                        margin="normal"
-                                        value={comment.user.first_name + " " + comment.user.last_name}
-                                    />
-
-                                    <TextField
-                                        label="Comment"
-                                        variant="outlined"
-                                        disabled
-                                        fullWidth
-                                        margin="normal"
-                                        multiline
-                                        rows={3}
-                                        value={comment.comment}
-                                    />
-                                </div>
-                            ))
-                        ) : (
-                            <TextField
-                                label="No Comments"
-                                variant="outlined"
-                                disabled
-                                fullWidth
-                                margin="normal"
-                            />
-                        )}
-                    </div>
+            <div>
+                <div>
+                    <Button variant="contained" component="a" href={"#/users/" + this.state.user_id}>
+                        User Detail
+                    </Button>
                 </div>
-            ))}
-        </ImageList>
-    </div>
-) : (
-    <div />
-);
+                <ImageList variant="masonry" cols={1} gap={8}>
+                    {this.state.photos.map((item) => (
+                        <div key={item._id}>
+                            <TextField id="date" label="Photo Date" variant="outlined" disabled fullWidth margin="normal"
+                                       value={item.date_time} />
+                            <ImageListItem key={item.file_name}>
+                                <img
+                                    src={`images/${item.file_name}`}
+                                    srcSet={`images/${item.file_name}`}
+                                    alt={item.file_name}
+                                    loading="lazy"
+                                />
+                            </ImageListItem>
+                            {item.comments ?
+                                item.comments.map((comment) => (
+                                    <div key={comment._id}>
+                                        <TextField id="date" label="Comment Date" variant="outlined" disabled fullWidth
+                                                   margin="normal" value={comment.date_time} />
+                                        <TextField id="user" label="User" variant="outlined" disabled fullWidth
+                                                   margin="normal"
+                                                   value={comment.user.first_name + " " + comment.user.last_name}
+                                                   component="a" href={"#/users/" + comment.user._id}/>
+                                        <TextField id="comment" label="Comment" variant="outlined" disabled fullWidth
+                                                   margin="normal" multiline rows={4} value={comment.comment} />
+                                    </div>
+                                ))
+                                : (
+                                    <div>
+                                        <TextField id="comment" label="No Comments" variant="outlined" disabled fullWidth
+                                                   margin="normal" />
+                                    </div>
+                                )}
+                        </div>
+                    ))}
+                </ImageList>
+            </div>
+        ) : (
+            <div/>
+        );
     }
 }
 
 export default UserPhotos;
+

@@ -49,34 +49,23 @@ class UserList extends React.Component {
     }
 
   render() {
-     return this.state.users ? (
-    <div className="user-list-container">
-      
-      <div className="user-list-header">
-        Users
-      </div>
-
-      <List component="nav">
-        {this.state.users.map((user) => (
-          <ListItemButton
-            key={user._id}
-            selected={this.state.user_id === user._id}
-            divider
-            component="a"
-            href={"#/users/" + user._id}
-            className="user-list-item"
-          >
-            <ListItemText
-              primary={user.first_name + " " + user.last_name}
-              className="user-list-text"
-            />
-          </ListItemButton>
-        ))}
-      </List>
-      
-    </div>
-  ) : (
-    <div className="user-list-container" />
+    return this.state.users ?(
+        <div>
+        <List component="nav">
+            {
+                this.state.users.map(user => (
+                <ListItemButton selected={this.state.user_id === user._id}
+                                key={user._id}
+                                divider={true}
+                                component="a" href={"#/users/" + user._id}>
+                    <ListItemText primary={user.first_name + " " + user.last_name} />
+                </ListItemButton>
+            ))
+            }
+        </List>
+        </div>
+    ) : (
+        <div/>
     );
   }
 }
