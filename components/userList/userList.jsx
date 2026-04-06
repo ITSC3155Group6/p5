@@ -8,7 +8,11 @@ import {
 }
 from '@mui/material';
 import './userList.css';
+<<<<<<< Updated upstream
 
+=======
+import axios from 'axios';
+>>>>>>> Stashed changes
 /**
  * Define UserList, a React component of project #5
  */

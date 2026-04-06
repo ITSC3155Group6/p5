@@ -3,8 +3,12 @@ import {
   Typography
 } from '@mui/material';
 import './userDetail.css';
+<<<<<<< Updated upstream
 
 
+=======
+import axios from 'axios';
+>>>>>>> Stashed changes
 /**
  * Define UserDetail, a React component of project #5
  */
