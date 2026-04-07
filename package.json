@@ -9,9 +9,13 @@
     "build:w": "webpack --devtool eval-cheap-module-source-map --output-pathinfo --watch",
     "lint": "eslint *.jsx components/*/*.jsx || exit 0"
   },
-  "author": "Mendel Rosenblum <mendel@cs.stanford.edu> ",
+  "author": "Mendel Rosenblum <mendel@cs.stanford.edu>",
   "contributors": [
-    "Todd Dobbs <btdobbs@uncc.edu> (https://orcid.org/0000-0001-6711-6962)"
+    {
+      "name": "Todd Dobbs",
+      "email": "btdobbs@uncc.edu",
+      "url": "https://orcid.org/0000-0001-6711-6962"
+    }
   ],
   "license": "ISC",
   "dependencies": {
@@ -22,7 +26,7 @@
     "@mui/system": "^5.11.8",
     "@popperjs/core": "^2.11.5",
     "babel-plugin-lodash": "^3.3.4",
-    "express": "^4.18.1",
+    "express": "^4.22.1",
     "file-loader": "^6.2.0",
     "js-yaml": "^4.1.0",
     "prismjs": "^1.26.0",
@@ -57,5 +61,18 @@
   },
   "overrides": {
     "core-js": "3.22.3"
-  }
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ITSC3155Group6/p5.git"
+  },
+  "keywords": [],
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ITSC3155Group6/p5/issues"
+  },
+  "homepage": "https://github.com/ITSC3155Group6/p5#readme"
 }
