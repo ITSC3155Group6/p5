@@ -5,7 +5,8 @@ import {
     TextField
 } from '@mui/material';
 import './userDetail.css';
-import axios from 'axios'
+import axios from 'axios';
+
 /**
  * Define UserDetail, a React component of project #5
  */
@@ -85,3 +86,4 @@ class UserDetail extends React.Component {
 }
 
 export default UserDetail;
+

@@ -3,7 +3,8 @@ import {
     AppBar, Toolbar, Typography
 } from '@mui/material';
 import './TopBar.css';
-import axios from 'axios'
+import axios from 'axios';
+
 /**
  * Define TopBar, a React componment of project #5
  */
@@ -22,7 +23,7 @@ class TopBar extends React.Component {
     handleAppInfoChange(){
         const app_info = this.state.app_info;
         if (app_info === undefined){
-		axios.get("/test/info")
+            axios.get("/test/info")
                 .then((response) =>
                 {
                     this.setState({
@@ -38,7 +39,7 @@ class TopBar extends React.Component {
         <Toolbar>
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }}>Luna Stevens</Typography>
             <Typography variant="h5" component="div" sx={{ flexGrow: 1 }} color="inherit">{this.props.main_content}</Typography>
-            <Typography variant="h5" component="div" color="inherit">Version: {this.state.app_info.__v}</Typography>
+            <Typography variant="h5" component="div" color="inherit">Version: {this.state.app_info.version}</Typography>
         </Toolbar>
       </AppBar>
     ) : (

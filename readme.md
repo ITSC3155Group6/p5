@@ -1,11 +1,9 @@
-# \<Project PhotoApp\> Scrum Team
+# \<Project Name\> Scrum Team
 ## Product Owner
-\<Team Group 6\>
+\<Team 6\>
 ## Scrum Master
-\<Team Evan Barber\>
+\<Evan Barber\>
 ## Developers
-- \<Team Evan Barber\>
-- \<Team Alexander Bass\>
-- \<Team Luna Stevens\>
-## Project Documentation
-[Link](https://drive.google.com/drive/folders/1IZVvRM7SheQ5VvyDtd9ulZZcS7Z3kDpY?usp=drive_link)
+- \<Luna Stevens\>
+- \<Evan Barber\>
+- \<Alexander Bass\>
