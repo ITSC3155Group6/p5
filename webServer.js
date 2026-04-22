@@ -1,4 +1,3 @@
-
 const mongoose = require("mongoose");
 mongoose.Promise = require("bluebird");
 
@@ -75,17 +74,17 @@ app.get("/test/:p1", function (request, response) {
     // match it.
     SchemaInfo.find({}, function (err, info) {
       if (err) {
-        // Query returned an error. We pass it back to the browser with an
-        // Internal Service Error (500) error code.
-        console.error("Error in /user/info:", err);
-        response.status(500).send(JSON.stringify(err));
-        return;
+	// Query returned an error. We pass it back to the browser with an
+	// Internal Service Error (500) error code.
+	console.error("Error in /user/info:", err);
+	response.status(500).send(JSON.stringify(err));
+	return;
       }
       if (info.length === 0) {
-        // Query didn't return an error but didn't find the SchemaInfo object -
-        // This is also an internal error return.
-        response.status(400).send("Missing SchemaInfo");
-        return;
+	// Query didn't return an error but didn't find the SchemaInfo object -
+	// This is also an internal error return.
+	response.status(400).send("Missing SchemaInfo");
+	return;
       }
 
       // We got the object - return it in JSON format.
@@ -104,21 +103,21 @@ app.get("/test/:p1", function (request, response) {
     async.each(
       collections,
       function (col, done_callback) {
-        col.collection.countDocuments({}, function (err, count) {
-          col.count = count;
-          done_callback(err);
-        });
+	col.collection.countDocuments({}, function (err, count) {
+	  col.count = count;
+	  done_callback(err);
+	});
       },
       function (err) {
-        if (err) {
-          response.status(500).send(JSON.stringify(err));
-        } else {
-          const obj = {};
-          for (let i = 0; i < collections.length; i++) {
-            obj[collections[i].name] = collections[i].count;
-          }
-          response.end(JSON.stringify(obj));
-        }
+	if (err) {
+	  response.status(500).send(JSON.stringify(err));
+	} else {
+	  const obj = {};
+	  for (let i = 0; i < collections.length; i++) {
+	    obj[collections[i].name] = collections[i].count;
+	  }
+	  response.end(JSON.stringify(obj));
+	}
       }
     );
   } else {
@@ -166,29 +165,29 @@ app.post("/user", function (request, response) {
       console.error("Error in /user", err);
       response.status(500).send();
     } else if (returnValue) {
-        console.error("Error in /user", returnValue);
-        response.status(400).send();
+	console.error("Error in /user", returnValue);
+	response.status(400).send();
       } else {
-        User.create(
-            {
-              _id: new mongoose.Types.ObjectId(),
-              first_name: first_name,
-              last_name: last_name,
-              location: location,
-              description: description,
-              occupation: occupation,
-              login_name: login_name,
-              password: password
-            })
-            .then((user) => {
-              request.session.user_id = user._id;
-              session.user_id = user._id;
-              response.end(JSON.stringify(user));
-            })
-            .catch(err1 => {
-              console.error("Error in /user", err1);
-              response.status(500).send();
-            });
+	User.create(
+	    {
+	      _id: new mongoose.Types.ObjectId(),
+	      first_name: first_name,
+	      last_name: last_name,
+	      location: location,
+	      description: description,
+	      occupation: occupation,
+	      login_name: login_name,
+	      password: password
+	    })
+	    .then((user) => {
+	      request.session.user_id = user._id;
+	      session.user_id = user._id;
+	      response.end(JSON.stringify(user));
+	    })
+	    .catch(err1 => {
+	      console.error("Error in /user", err1);
+	      response.status(500).send();
+	    });
       }
   });
 });
@@ -214,25 +213,25 @@ app.post("/photos/new", function (request, response) {
     const filename = 'U' +  String(timestamp) + request.file.originalname;
     fs.writeFile("./images/" + filename, request.file.buffer, function (err1) {
       if (err1) {
-        console.error("Error in /photos/new", err1);
-        response.status(400).send("error writing photo");
-        return;
+	console.error("Error in /photos/new", err1);
+	response.status(400).send("error writing photo");
+	return;
       }
       Photo.create(
-          {
-            _id: new mongoose.Types.ObjectId(),
-            file_name: filename,
-            date_time: new Date(),
-            user_id: new mongoose.Types.ObjectId(user_id),
-            comment: []
-          })
-          .then(() => {
-            response.end();
-          })
-          .catch(err2 => {
-            console.error("Error in /photos/new", err2);
-            response.status(500).send(JSON.stringify(err2));
-          });
+	  {
+	    _id: new mongoose.Types.ObjectId(),
+	    file_name: filename,
+	    date_time: new Date(),
+	    user_id: new mongoose.Types.ObjectId(user_id),
+	    comment: []
+	  })
+	  .then(() => {
+	    response.end();
+	  })
+	  .catch(err2 => {
+	    console.error("Error in /photos/new", err2);
+	    response.status(500).send(JSON.stringify(err2));
+	  });
     });
   });
 });
@@ -260,13 +259,13 @@ app.post("/commentsOfPhoto/:photo_id", function (request, response) {
   Photo.updateOne(
       { _id: new mongoose.Types.ObjectId(id) },
       { $push: {
-          comments: {
-            comment: comment,
-            date_time: new Date(),
-            user_id: new mongoose.Types.ObjectId(user_id),
-            _id: new mongoose.Types.ObjectId()
-          }
-        } },
+	  comments: {
+	    comment: comment,
+	    date_time: new Date(),
+	    user_id: new mongoose.Types.ObjectId(user_id),
+	    _id: new mongoose.Types.ObjectId()
+	  }
+	} },
    function (err) {
     if (err) {
       // Query returned an error. We pass it back to the browser with an
@@ -287,8 +286,8 @@ app.post("/admin/login", function (request, response) {
   const password = request.body.password || "";
   User.find(
       {
-        login_name: login_name,
-        password: password
+	login_name: login_name,
+	password: password
       }, {__v: 0}, function (err, user) {
     if (err) {
       // Query returned an error. We pass it back to the browser with an
@@ -316,10 +315,11 @@ app.post("/admin/login", function (request, response) {
  * URL /admin/logout - clears user session
  */
 app.post("/admin/logout", function (request, response) {
-  //session.user = undefined;
-  //response.clearCookie('user');
+  if (!getSessionUserID(request)) {
+    response.status(400).send("Not logged in");
+    return;
+  }
   request.session.destroy(() => {
-    session.user_id = undefined;
     response.end();
   });
 });
@@ -356,27 +356,27 @@ app.get("/user/:id", function (request, response) {
   const id = request.params.id;
   User.findById(id,{__v:0, login_name:0, password: 0})
       .then((user) => {
-        if (user === null) {
-          // Query didn't return an error but didn't find the SchemaInfo object -
-          // This is also an internal error return.
-          console.error("User not found - /user/:id", id);
-          response.status(400).send();
-        }
-        response.end(JSON.stringify(user));
+	if (user === null) {
+	  // Query didn't return an error but didn't find the SchemaInfo object -
+	  // This is also an internal error return.
+	  console.error("User not found - /user/:id", id);
+	  response.status(400).send();
+	}
+	response.end(JSON.stringify(user));
       })
       .catch( (err) => {
-        // Query returned an error. We pass it back to the browser with an
-        // Internal Service Error (500) error code.
-        console.error("Error in /user/:id", err.reason);
-        if (err.reason.toString().startsWith("BSONTypeError:")) {
-          response.status(400)
-              .send();
-        }
-        else {
-          response.status(500)
-              .send();
-        }
-        return null;
+	// Query returned an error. We pass it back to the browser with an
+	// Internal Service Error (500) error code.
+	console.error("Error in /user/:id", err.reason);
+	if (err.reason.toString().startsWith("BSONTypeError:")) {
+	  response.status(400)
+	      .send();
+	}
+	else {
+	  response.status(500)
+	      .send();
+	}
+	return null;
       });
 });
 
@@ -388,55 +388,55 @@ app.get("/photosOfUser/:id", function (request, response) {
   const id = request.params.id;
   User.findById(id,{__v:0, login_name:0, password: 0})
       .then((user) => {
-        if (user === null) {
-          // Query didn't return an error but didn't find the SchemaInfo object -
-          // This is also an internal error return.
-          console.error("User not found - /user/:id", id);
-          response.status(400).send();
-        }
-        Photo.aggregate([
-          { $match: {user_id: {$eq: new mongoose.Types.ObjectId(id)}}},
-          { $addFields: { comments: {$ifNull: ["$comments", []]}}},
-          { $lookup: { from: "users", localField: "comments.user_id", foreignField: "_id", as: "users"}},
-          { $addFields: { comments: { $map: { input: "$comments",
+	if (user === null) {
+	  // Query didn't return an error but didn't find the SchemaInfo object -
+	  // This is also an internal error return.
+	  console.error("User not found - /user/:id", id);
+	  response.status(400).send();
+	}
+	Photo.aggregate([
+	  { $match: {user_id: {$eq: new mongoose.Types.ObjectId(id)}}},
+	  { $addFields: { comments: {$ifNull: ["$comments", []]}}},
+	  { $lookup: { from: "users", localField: "comments.user_id", foreignField: "_id", as: "users"}},
+	  { $addFields: { comments: { $map: { input: "$comments",
 in: { $mergeObjects: ["$$this",
-                      { user: { $arrayElemAt: ["$users", { $indexOfArray: ["$users._id", "$$this.user_id"] }] } }
-                    ] } } } } },
-          { $project: { users: 0,
+		      { user: { $arrayElemAt: ["$users", { $indexOfArray: ["$users._id", "$$this.user_id"] }] } }
+		    ] } } } } },
+	  { $project: { users: 0,
 __v: 0,
 "comments.__v": 0,
 "comments.user_id": 0,
-              "comments.user.location": 0,
+	      "comments.user.location": 0,
 "comments.user.description": 0,
 "comments.user.occupation": 0,
-              "comments.user.login_name": 0,
+	      "comments.user.login_name": 0,
 "comments.user.password": 0,
 "comments.user.__v": 0 } }
-        ])
-            .then((photos) => {
-              if (photos.length === 0 && typeof (photos) === "object") {
-                photos = [];
-              }
-              // We got the object - return it in JSON format.
-              response.end(JSON.stringify(photos));
-            }).catch((err) => {
-              console.error("Error in /photosOfUser/:id", err);
-              response.status(500).send(JSON.stringify(err));
-            });
+	])
+	    .then((photos) => {
+	      if (photos.length === 0 && typeof (photos) === "object") {
+		photos = [];
+	      }
+	      // We got the object - return it in JSON format.
+	      response.end(JSON.stringify(photos));
+	    }).catch((err) => {
+	      console.error("Error in /photosOfUser/:id", err);
+	      response.status(500).send(JSON.stringify(err));
+	    });
       })
       .catch( (err) => {
-        // Query returned an error. We pass it back to the browser with an
-        // Internal Service Error (500) error code.
-        console.error("Error in /user/:id", err.reason);
-        if (err.reason.toString().startsWith("BSONTypeError:")) {
-          response.status(400)
-              .send();
-        }
-        else {
-          response.status(500)
-              .send();
-        }
-        return null;
+	// Query returned an error. We pass it back to the browser with an
+	// Internal Service Error (500) error code.
+	console.error("Error in /user/:id", err.reason);
+	if (err.reason.toString().startsWith("BSONTypeError:")) {
+	  response.status(400)
+	      .send();
+	}
+	else {
+	  response.status(500)
+	      .send();
+	}
+	return null;
       });
 });
 
