@@ -3,7 +3,7 @@
 const mongoose = require("mongoose");
 
 /**
- * Define the Mongoose Schema for a Comment.
+ * Define the Mongoose Schema for a User.
  */
 const userSchema = new mongoose.Schema({
   first_name: String,
@@ -11,6 +11,8 @@ const userSchema = new mongoose.Schema({
   location: String,
   description: String,
   occupation: String,
+  login_name: String,
+  password: String,
 });
 
 /**
